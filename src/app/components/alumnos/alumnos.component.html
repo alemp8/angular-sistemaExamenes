@@ -1,0 +1,42 @@
+<div class="card text-bg-dark mb-3">
+    <div class="card-header">{{titulo}}</div>
+    <div class="card-body">
+        <button class="btn btn-primary my-2" routerLink="/alumnos/form"> Crear </button>
+        <div class="alert alert-info" *ngIf="lista.length==0">
+            No hay alumnos en el sistema.
+        </div>
+        <table class="table table-hover table-striped" *ngIf="lista.length==0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Fecha</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let alumno of lista">
+                    <td>{{alumno.id}}</td>
+                    <td><img *ngIf="alumno.fotoHaschCode" [src]="'http://localhost:8090/api/alumnos/uploads/img/'+ alumno.id + '?fotoHashcCode='+alumno.fotoHaschCode" class="img-thumbnail rounded" style="width: 64px; cursor: pointer;"></td>
+                    <td>{{alumno.nombre}}</td>
+                    <td>{{alumno.apellido}}</td>
+                    <td>{{alumno.email}}</td>
+                    <td>{{alumno.fecha| date:'yyyy/MM/dd'}}</td>
+                    <td><button class="btn btn-primary btn-sm" [routerLink]="['/alumnos/form',alumno.id]"> Editar </button></td>
+                    <td><button class="btn btn-primary btn-sm" (click)="eliminar(alumno)"> Eliminar</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <mat-paginator [length]="totalRegistros"
+              [pageSize]="totalPorPagina"
+              [pageIndex]="paginaActual"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="paginar($event)"
+              aria-label="Seleccionar Pagina">
+</mat-paginator>
+    </div>
+  </div>

@@ -1,0 +1,42 @@
+<div class="card text-bg-dark mb-3">
+    <div class="card-header">Formulario de Registro</div>
+    <div class="card-body">
+        <button class="btn btn-primary my-3" routerLink="/cursos"> Volver </button>
+        <form>
+            <div class="form-group">
+                <label for="">Nombre</label>
+                <input type="text" name="nombre" class="form-control"
+                [(ngModel)]="model.nombre">
+                <div class="alert alert danger" * ngIf="error && error.nombre">
+                    {{error.nombre}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="asignatura">Asignaturas</label>
+                <select ngModel="model.asignatura" class ="form-control" name="asignatura" id="asignatura"></select>
+            <option *ngFor="let asignatura of asignaturas" ngValue="">{{asignatura.nombre}}</option>
+            </div>
+
+            <button (click)= "agregarPregunta()" class="btn btn-light btn-lg my-3">
+                Agregar Pregunta
+            </button>
+            <div class="form-group" *ngFor="let pregunta of model.preguntas; let i = index ">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label>Pregunta {{i+1}}</label>
+                        </div>
+                        <div class="col-sm-2">
+                        <input type="text" value="{{pregunta.texto}}" class="form-control"(change)="asignaturaTexto(pregunta, $event)">
+                        </div>
+                        <div class="col-sm-1">
+                            <button class="btn btn-danger btn-sm" (click)="eliminarpregunta(pregunta)"> x </button>
+                        </div>
+                    </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary my-3" (click)="model.id? editar():crear()">{{model.id? 'Editar':'Crear'}}</button>
+            </div>
+        </form>
+    </div>
+</div>

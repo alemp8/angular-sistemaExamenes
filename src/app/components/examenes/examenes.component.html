@@ -1,0 +1,36 @@
+<div class="card text-bg-dark mb-3">
+    <div class="card-header">{{titulo}}</div>
+    <div class="card-body">
+        <button class="btn btn-primary my-2" routerLink="/examenes/form"> Crear </button>
+        <div class="alert alert-info" *ngIf="lista.length==0">
+            No hay examenes en el sistema.
+        </div>
+        <table class="table table-hover table-striped" *ngIf="lista.length==0">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let examen of lista">
+                    <td>{{examen.id}}</td>
+                    <td>{{examen.nombre}}</td>
+                    <td>{{examen.fecha| date:'yyyy/MM/dd'}}</td>
+                    <td><button class="btn btn-primary btn-sm" [routerLink]="['/examen/form',examen.id]"> Editar </button></td>
+                    <td><button class="btn btn-primary btn-sm" (click)="eliminar(examen)"> Eliminar</button></td>
+                </tr>
+            </tbody>
+        </table>
+   <mat-paginator [length]="totalRegistros"
+              [pageSize]="totalPorPagina"
+              [pageIndex]="paginaActual"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="paginar($event)"
+              aria-label="Seleccionar Pagina">
+</mat-paginator>
+    </div>
+  </div>
